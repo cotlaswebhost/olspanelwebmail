@@ -37,6 +37,7 @@ download_snappymail_archive() {
 	github_tar="$(curl -fsSL --connect-timeout 10 --max-time 45 "$api_url" \
 		| grep -oE 'https://github.com/the-djmaze/snappymail/releases/download/[^\"]+\.tar\.gz' \
 		| grep -v '\.asc$' \
+		| grep -vi 'cpanel' \
 		| head -n 1 || true)"
 
 	if [[ -n "$github_tar" ]] && curl -fL --connect-timeout 10 --max-time 90 "$github_tar" -o "$archive"; then
@@ -51,6 +52,7 @@ install_snappymail() {
 	local archive="$TMP_DIR/snappymail-latest.tar.gz"
 	local extract_dir="$TMP_DIR/snappymail-src"
 	local top_dir=""
+	local app_dir=""
 
 	rm -rf "$SNAPPY_DIR"/*
 	download_snappymail_archive "$archive"
@@ -63,7 +65,14 @@ install_snappymail() {
 		top_dir="$extract_dir"
 	fi
 
-	cp -a "$top_dir"/. "$SNAPPY_DIR"/
+	app_dir="$top_dir"
+	if [[ -d "$top_dir/local/cpanel/base/3rdparty/snappymail" ]]; then
+		app_dir="$top_dir/local/cpanel/base/3rdparty/snappymail"
+	elif [[ -d "$top_dir/cpanel/base/3rdparty/snappymail" ]]; then
+		app_dir="$top_dir/cpanel/base/3rdparty/snappymail"
+	fi
+
+	cp -a "$app_dir"/. "$SNAPPY_DIR"/
 	cp -f "$REPO_ROOT/3rdparty/snappymail/auto_index.php" "$SNAPPY_DIR/auto_index.php"
 	cp -f "$REPO_ROOT/plugin/snappymail.conf" "$PLUGIN_DIR/snappymail.conf"
 

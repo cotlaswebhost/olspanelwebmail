@@ -1,7 +1,7 @@
 <?php
 $email = $_SERVER['HTTP_AUTOLOGINUSER'] ?? '';
 $password = $_SERVER['HTTP_AUTOLOGINPASS'] ?? '';
-$targetUrl = '/3rdparty/snappymail/';
+$targetUrl = '/3rdparty/snappymail/index.php';
 
 if ($email === '' || $password === '') {
     http_response_code(400);

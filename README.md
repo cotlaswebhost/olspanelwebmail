@@ -22,6 +22,33 @@ chmod +x scripts/install-webmail-plugins.sh
 sudo bash scripts/install-webmail-plugins.sh
 ```
 
+## Update in one command
+
+```bash
+cd /root/olspanelwebmail
+sudo bash scripts/update-webmail-plugins.sh
+```
+
+What it does:
+- Pulls latest repo changes with `git pull --ff-only` when this folder is a git checkout.
+- Runs `scripts/install-webmail-plugins.sh` to apply the latest plugin files.
+
+## Uninstall
+
+Interactive uninstall:
+
+```bash
+cd /root/olspanelwebmail
+sudo bash scripts/uninstall-webmail-plugins.sh
+```
+
+Non-interactive uninstall:
+
+```bash
+cd /root/olspanelwebmail
+sudo bash scripts/uninstall-webmail-plugins.sh --yes
+```
+
 If your panel path is different, set `OLSPANEL_BASE_DIR`:
 
 ```bash

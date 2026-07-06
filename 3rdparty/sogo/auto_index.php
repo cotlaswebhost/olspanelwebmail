@@ -1,12 +1,18 @@
 <?php
 $email = $_SERVER['HTTP_AUTOLOGINUSER'] ?? '';
 $password = $_SERVER['HTTP_AUTOLOGINPASS'] ?? '';
-$targetUrl = getenv('SOGO_TARGET_URL') ?: '/SOGo/';
+$targetUrl = getenv('SOGO_TARGET_URL') ?: '';
 
 if ($email === '' || $password === '') {
     http_response_code(400);
     echo 'Missing webmail credentials.';
     exit;
+}
+
+if ($targetUrl === '') {
+  http_response_code(503);
+  echo 'SOGo backend is not configured. Set SOGO_TARGET_URL and try again.';
+  exit;
 }
 
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
