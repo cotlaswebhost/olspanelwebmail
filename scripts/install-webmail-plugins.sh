@@ -73,6 +73,7 @@ install_snappymail() {
 	fi
 
 	cp -a "$app_dir"/. "$SNAPPY_DIR"/
+	cp -f "$REPO_ROOT/3rdparty/snappymail/index.php" "$SNAPPY_DIR/index.php"
 	cp -f "$REPO_ROOT/3rdparty/snappymail/auto_index.php" "$SNAPPY_DIR/auto_index.php"
 	cp -f "$REPO_ROOT/plugin/snappymail.conf" "$PLUGIN_DIR/snappymail.conf"
 

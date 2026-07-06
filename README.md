@@ -60,6 +60,15 @@ sudo OLSPANEL_BASE_DIR=/custom/path/to/mypanel bash scripts/install-webmail-plug
 - The plugin link for SOGo points to `/3rdparty/sogo/auto_index.php` (not `/SOGo/`) to avoid panel 404s when no `/SOGo/` route exists.
 - To use full SOGo webmail, you still need a running SOGo backend and proxy target.
 - `SOGO_TARGET_URL` can be set in environment for custom SOGo login target.
+- Example for OLSPanel service env:
+
+```bash
+sudo sed -i '/^Environment="SOGO_TARGET_URL=/d' /etc/systemd/system/cp.service
+sudo sed -i '/^Group=/a Environment="SOGO_TARGET_URL=https://your-sogo-host/SOGo/"' /etc/systemd/system/cp.service
+sudo systemctl daemon-reload && sudo systemctl restart cp
+```
+
+- Snappymail installs with a compatibility `index.php` bootstrap so `/3rdparty/snappymail/index.php` is always present.
 
 ## Quick checks
 
